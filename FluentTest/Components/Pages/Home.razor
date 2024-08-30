@@ -1,0 +1,83 @@
+﻿@page "/"
+
+@using System.ComponentModel.DataAnnotations
+
+<PageTitle>Home</PageTitle>
+
+<HeadContent>
+  <style media="screen">
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: fade 0.2s ease-in-out forwards;
+    }
+
+    h1 {
+      font-size: 35px;
+      font-weight: 100;
+      text-align: center;
+    }
+  </style>
+</HeadContent>
+
+<FluentCard Width="500px">
+  <FluentStack Orientation="Orientation.Vertical">
+    <FluentGrid Spacing="3" Justify="JustifyContent.Center">
+
+      <EditForm FormName="LoginForm" Model="@LoginData" OnValidSubmit="@Submit">
+
+        <DataAnnotationsValidator />
+
+        <FluentGridItem xs="12">
+          <h1>Login</h1>
+        </FluentGridItem>
+
+        <FluentGridItem xs="12">
+          <FluentTextField Style="width: 100%" @bind-Value="LoginData.UserName" Label="UserName" />
+        </FluentGridItem>
+
+        <FluentGridItem xs="12">
+          <FluentTextField Style="width: 100%" @bind-Value="LoginData.Password" Label="Password" TextFieldType="TextFieldType.Password" />
+        </FluentGridItem>
+
+        <FluentGridItem xs="12">
+          <FluentButton Type="ButtonType.Submit" Appearance="Appearance.Accent" Style="width: 100%">Login</FluentButton>
+        </FluentGridItem>
+
+        <FluentGridItem xs="12">
+          <FluentValidationSummary />
+        </FluentGridItem>
+
+      </EditForm>
+
+    </FluentGrid>
+  </FluentStack>
+</FluentCard>
+
+@code {
+  [SupplyParameterFromForm]
+  private LoginForm LoginData { get; set; } = new LoginForm();
+
+  protected override void OnInitialized()
+  {
+    LoginData ??= new();
+  }
+
+  private void Submit()
+  {
+    String test;
+    test = LoginData.UserName;
+    test = LoginData.Password;
+  }
+
+  class LoginForm
+  {
+    [Required(ErrorMessage = "ユーザー名を入力してください。")]
+    public string UserName { get; set; } = "";
+
+    [Required(ErrorMessage = "パスワードを入力してください。")]
+    public string Password { get; set; } = "";
+  }
+}
