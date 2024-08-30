@@ -9,6 +9,7 @@ builder.Services.AddRazorComponents()
 
 // FluentUIのコンポーネントを追加
 builder.Services.AddFluentUIComponents();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
